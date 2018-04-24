@@ -15,7 +15,8 @@ int duration(string test)
 
     // for the above data, the demoninator determines what to do with the numerator to return "number of eight notes"
 
-    switch(denominator) {
+    switch (denominator)
+    {
         case 8 :
             return numerator;
         case 4 :
