@@ -32,50 +32,53 @@ int duration(string test)
 // Calculates frequency (in Hz) of a note
 int frequency(string note)
 {
-    char letter = note[0]; //the ASCII char for the given note
+    int letter = note[0]; //the ASCII char for the given note, used in the switch logic below
 
-    int octave;
-    int accidental = 0;
-    int noteLength =  strlen(note);
+    int octave;  //initialize octave
+    int accidental = 0; //accidental starts at 0
+    int noteLength =  strlen(note); //length of the note string (should be less than 3)
 
-    float letterHz = 0.00;
-    float accidentalHz = 0.0;
-    float accidentalTotalHz;
-    float octaveHz;
+    float letterHz = 0.00; //Hz for given letter starts at 0.00
+    float accidentalHz = 0.0; //Hz for accidental starts at 0.0
+    float accidentalTotalHz; //place to hold the total hz for all accidentals for a note
+    float octaveHz; //hz of the octave
 
+    // based on how long the input is, we know if there is an accidental or not
     if (noteLength == 3)
     {
-        octave = note[2];
-        accidental = note[1];
+        octave = note[2]; //the octave is in position 2
+        accidental = note[1]; //the acciental is in position 1
     }
     else
     {
-        octave = note[1];
+        octave = note[1]; //only have to factor in the octave, bc no accidentals
     }
 
+    //first switch statement handles frequency of ONLY notes A - G (no accidentals or octaves yet)
     switch (letter)
-    //pow - for exponents
     {
-        case 65 : //for ASCII note 65 --> A
-            letterHz = 440; //HZ is 440
+        case 'A' : //for note 65 --> A
+            letterHz = 440; //HZ is 440, the base for the functions below
+            // printf("The Hz at A %f\n", letterHz);
             break;
-        case 66 : //for note B
-            letterHz = 440 * pow(2, 2. / 12); //mulitply 2 to the power of 2/12
+        case 'B' : //for note B
+            letterHz = 440. * pow(2, 2. / 12); //mulitply 2 to the power of 2/12
             break;
-        case 67 : //for note C
-            letterHz = 440 * pow(2, 9. / 12); //multiply 2 to the power of 9/12
+        case 'C' : //for note C
+            letterHz = 440. / pow(2.00, 9.00 / 12); //multiply 2 to the power of 9/12
+            // printf("The Hz at C %f\n", letterHz);
             break;
-        case 68 : //for note D
-            letterHz = 440 * pow(2, 7. / 12); //multiply 2 to the power of 7/12
+        case 'D' : //for note D
+            letterHz = 440. / pow(2, 7. / 12); //multiply 2 to the power of 7/12
             break;
-        case 69 : //for note E
-            letterHz = 440 * pow(2, 5. / 12); //multiply 2 to the power of 5/12
+        case 'E' : //for note E
+            letterHz = 440. / pow(2, 5. / 12); //multiply 2 to the power of 5/12
             break;
-        case 70 : //for note F
-            letterHz = 440 * pow(2, 4. / 12); //multiply 2 to the power of 4/12
+        case 'F' : //for note F
+            letterHz = 440. / pow(2, 4. / 12); //multiply 2 to the power of 4/12
             break;
-        case 71 : //for note G
-            letterHz = 440 * pow(2, 2. / 12); //multiply 2 to the power of 2/12
+        case 'G' : //for note G
+            letterHz = 440. / pow(2, 2. / 12); //multiply 2 to the power of 2/12
             break;
     }
 
@@ -93,39 +96,41 @@ int frequency(string note)
     else
     {
         accidentalTotalHz = letterHz;
+        // printf("The Hz for accidentals %f\n", letterHz);
     }
 
+    // switch statement for octave
     switch (octave)
     {
-        case 52 : //char 52 --> 4 for 4th octave
+        case '4' : // 4th octave
             octaveHz = accidentalTotalHz;
             break;
-        case 51 : //char 51 --> 3 for 3rd octave
+        case '3' : // 3rd octave
             octaveHz = accidentalTotalHz / 2.;
             break;
-        case 50 : //char 50 --> 2 for 2nd octave
+        case '2' : // 2nd octave
             octaveHz = accidentalTotalHz / 4.;
             break;
-        case 49 : //char 49 --> 1 for 1st octave
+        case '1' : // 1st octave
             octaveHz = accidentalTotalHz / 8.;
             break;
-        case 53 : //char 53 --> 5 for 5th octave
-            octaveHz = accidentalTotalHz / 2.;
+        case '5' : //5th octave
+            octaveHz = accidentalTotalHz * 2.;
             break;
-        case 54 : //char 54 --> 6 for 6th octave
-            octaveHz = accidentalTotalHz / 4.;
+        case '6' : //6th octave
+            octaveHz = accidentalTotalHz * 4.;
+            // printf("The Hz of the octave is: %f\n", octaveHz);
             break;
-        case 55 : //char 55 --> 7 for 7th octave
-            octaveHz = accidentalTotalHz / 8.;
+        case '7' : //7th octave
+            octaveHz = accidentalTotalHz * 8.;
             break;
-        case 56 : //char 56 --> 8 for 8th octave
-            octaveHz = accidentalTotalHz / 16.;
+        case '8' : //8th octave
+            octaveHz = accidentalTotalHz * 16.;
     }
 
-    int ret = lroundf(octaveHz);
+    int ret = lroundf(octaveHz); //outputs the rounded frequency of the note in Hz
+    // printf("The rounded frequency of the given note in HZ %i\n", ret);
     return ret;
-    // printf("%i\n, octave); testing octave numbers
-
 }
 
 // Determines whether a string represents a rest
