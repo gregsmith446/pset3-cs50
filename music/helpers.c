@@ -1,5 +1,8 @@
 // Helper functions for music
-
+//Peer review comments signed MAN by Michael A. Nowiszewski
+// Excellent code breakdown - very organized, logical layout. Clean code. I enjoyed how you broke it down into individual modules here in order to understand it prior to combining all three functions in helpers.c! -MAN
+// Also thought your use of printfs along the way was a useful tool for self check. Saw this and mentioned it in class prior to being teamed up! - MAN
+// Included one or two small notes - great job G! Passes all checks for style50 and check50, makes and plays BDAY.txt accurately as well! - MAN
 #include <cs50.h>
 #include <math.h> //pow - exponents
 #include <stdio.h>
@@ -66,7 +69,7 @@ int frequency(string note)
             letterHz = 440. * pow(2, 2. / 12); //mulitply 2 to the power of 2/12
             break;
         case 'C' : //for note C
-            letterHz = 440. / pow(2.00, 9.00 / 12); //multiply 2 to the power of 9/12
+            letterHz = 440. / pow(2.00, 9.00 / 12); //multiply 2 to the power of 9/12 // Do we need the ".00" here? - MAN
             // printf("The Hz at C %f\n", letterHz);
             break;
         case 'D' : //for note D
@@ -89,7 +92,7 @@ int frequency(string note)
         accidentalHz = letterHz * pow(2, 1. / 12);
         accidentalTotalHz = accidentalHz;
     }
-    else if (accidental == 98) // char 98 --> b flat
+    else if (accidental == 98) // char 98 --> b flat // Neat way to adjust for accidentals! -MAN
     {
         accidentalHz = letterHz / pow(2, 1. / 12);
         accidentalTotalHz = accidentalHz;
@@ -97,7 +100,7 @@ int frequency(string note)
     else
     {
         accidentalTotalHz = letterHz;
-        // printf("The Hz for accidentals %f\n", letterHz);
+        // printf("The Hz for accidentals %f\n", letterHz); // Big fan of the printf self checks! Our 'console.log' in C!! - MAN
     }
 
     // switch statement for octave
@@ -116,7 +119,7 @@ int frequency(string note)
             octaveHz = accidentalTotalHz / 8.;
             break;
         case '5' : //5th octave
-            octaveHz = accidentalTotalHz * 2.;
+            octaveHz = accidentalTotalHz * 2.; // Good use of switch statements to move between octaves and adjust! - MAN
             break;
         case '6' : //6th octave
             octaveHz = accidentalTotalHz * 4.;
